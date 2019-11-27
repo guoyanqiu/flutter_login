@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 ///https://blog.csdn.net/qq_39969226/article/details/90171163
+///
+/// /**
+///使用GlobalKey来使用Form
 class FormUseGlobalKeyDemo extends StatefulWidget {
   @override
   _FormState createState() {
@@ -8,7 +11,6 @@ class FormUseGlobalKeyDemo extends StatefulWidget {
   }
 }
 
-final _formKey = GlobalKey<FormState>();
 
 class _FormState extends State<FormUseGlobalKeyDemo> {
 
@@ -22,52 +24,32 @@ class _FormState extends State<FormUseGlobalKeyDemo> {
     );
   }
 
-
-
+  final _formKey = GlobalKey<FormState>();
   Widget _createForm() {
-    return Container(
-      child:Form(
+    return Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
-              validator: (value) {
-                ///value就是你输入的值
+              validator: (value) {///输入字符校验
                 if (value.isEmpty) {
-                  return 'Please enter some text!!';
+                  return '请输入文字';
                 }
                 return null;
               },
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: _createSubmitButton2(),
-            ),
+            _createSubmitButton(),///创建submit按钮
           ],
         ),
-      ) ,
     );
-  }
-
-  Widget _createSubmitButton2() {
-    return Builder(builder: (context) {
-      return RaisedButton(
-        child: Text('Submit2'),
-        onPressed: () {
-          if (Form.of(context).validate()) {
-            //验证通过提交数据
-          }
-        },
-      );
-    });
   }
 
   Widget _createSubmitButton() {
     return RaisedButton(
       onPressed: () {
-        if (_formKey.currentState.validate()) {
-        }
+        if (_formKey.currentState.validate()) {///点击时开始非空验证
+          }
       },
       child: Text('Submit'),
     );
