@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import 'model/UserInfoModel.dart';
-
-class LoginPage extends StatefulWidget {
+///这是一个空壳的登录UI界面，不具备任何功能
+class LoginPageEmptyShell extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPageEmptyShell> {
   GlobalKey<FormState> _signInFormKey = new GlobalKey();
   bool isShowPassWord = false;
   bool isLoading = false;
-  String userName;
-  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +23,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Center(
             ///登录按钮居中
             child: Container(
-              decoration: BoxDecoration(
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: Colors.white),
+                  color: Colors.white
+                ),
               width: MediaQuery.of(context).size.width * 0.85,
               child: Stack(
                 children: <Widget>[
@@ -71,17 +68,13 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            _buildUserNameTextField(),
-
-            ///创建用户名输入框
+            _buildUserNameTextField(), ///创建用户名输入框
             Container(
               height: 1,
               width: MediaQuery.of(context).size.width * 0.75,
               color: Colors.grey[400],
             ),
-            _buildPasswordTextField(),
-
-            ///创建登录密码输入框
+            _buildPasswordTextField(),///创建登录密码输入框
             Container(
               height: 1,
               width: MediaQuery.of(context).size.width * 0.75,
@@ -123,9 +116,7 @@ class _LoginPageState extends State<LoginPage> {
             return null;
           },
           onSaved: (value) {
-            setState(() {
-              password = value;
-            });
+            setState(() {});
           },
         ),
       ),
@@ -136,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
     return Flexible(
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 25, right: 25, top: 20, bottom: 20),
+        const EdgeInsets.only(left: 25, right: 25, top: 20, bottom: 20),
         child: TextFormField(
           //关联焦点
           decoration: InputDecoration(
@@ -155,9 +146,7 @@ class _LoginPageState extends State<LoginPage> {
             return null;
           },
           onSaved: (value) {
-            setState(() {
-              userName = value;
-            });
+            setState(() {});
           },
         ),
       ),
@@ -186,38 +175,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  UserInfoControlModel _userInfoControlModel = new UserInfoControlModel();
-
-  /// 登陆操作
+  // 登陆操作
   doLogin() {
+    _signInFormKey.currentState.save();
     setState(() {
       isLoading = true;
     });
-
-    ///给userName和password赋值
-    _signInFormKey.currentState.save();
-    print('开始登陆');
-    try {
-      _userInfoControlModel.deleteAll().then((result) {
-        print('删除结果：$result');
-        _userInfoControlModel
-            .insert(UserInfo(password: password, username: userName))
-            .then((value) {
-          print('存储成功:$value');
-          setState(() {
-            isLoading = false;
-          });
-          //跳转到首页
-//        Navigator.of(context).pushAndRemoveUntil(
-//            MaterialPageRoute(builder: (context) => AppPage(userResult)),
-//            (route) => route == null);
-        });
-      });
-    } catch (err) {
-      print("错误信息=="+err);
-    }
-
-
   }
 
 // 点击控制密码是否显示
@@ -244,4 +207,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+
 }

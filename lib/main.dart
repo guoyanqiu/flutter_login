@@ -4,9 +4,15 @@ import 'package:login_demo/FormWithoutGlobalKey.dart';
 
 import 'Hourglass.dart';
 import 'LoginPage.dart';
+import 'LoginPageEmptyShell.dart';
+import 'utils/SqlLiteUtil.dart';
 
-void main() => runApp(FlutterDemo());
-
+void main() async {
+  ///需要对数据库
+  final provider = new Provider();
+  await provider.init(true);
+  runApp(new FlutterDemo());
+}
 class FlutterDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,5 +63,9 @@ final List<_RouterInfo> list = <_RouterInfo>[
       name: "Form表单的使用2--->", builder: (context) => FormWithoutGlobalKey()),
 
   _RouterInfo(
-      name: "登录页面--->", builder: (context) => LoginPage()),
+      name: "登录页面搭建--->", builder: (context) => LoginPageEmptyShell()),
+
+
+  _RouterInfo(
+      name: "模拟登陆功能--->", builder: (context) => LoginPage()),
 ];
