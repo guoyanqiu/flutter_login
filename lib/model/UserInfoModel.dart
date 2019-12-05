@@ -1,8 +1,3 @@
-/// @Author: 一凨 
-/// @Date: 2019-01-07 16:24:42 
-/// @Last Modified by: 一凨
-/// @Last Modified time: 2019-01-08 17:37:42
-
 import 'dart:async';
 
 import 'BaseModel.dart';
@@ -12,7 +7,7 @@ abstract class UserInfoInterface {
   String get username;
   String get password;
 }
-///CREATE TABLE userInfo (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, username REAL (50) NOT NULL, password REAL (32) NOT NULL);
+///CREATE TABLE userInfo (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, username TEXT NOT NULL, password TEXT NOT NULL);
 class UserInfo implements UserInfoInterface {
   String username;
   String password;

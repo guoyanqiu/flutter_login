@@ -124,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
       child: Padding(
         padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
         child: TextFormField(
-          keyboardType:TextInputType.text,
           controller: _passwordEditingController,
           decoration: InputDecoration(
             icon: Icon(
@@ -167,7 +166,6 @@ class _LoginPageState extends State<LoginPage> {
         padding:
             const EdgeInsets.only(left: 25, right: 25, top: 20, bottom: 20),
         child: TextFormField(
-          keyboardType:TextInputType.text,
           controller: _userNameEditingController,
           //关联焦点
           decoration: InputDecoration(
@@ -231,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
       _userInfoControlModel.deleteAll().then((result) {
         print('删除结果：$result');
         _userInfoControlModel
-            .insert(UserInfo(password: password.toString(), username: userName.toString()))
+            .insert(UserInfo(password: password, username: userName))
             .then((value) {
           print('存储成功:$value');
           setState(() {
