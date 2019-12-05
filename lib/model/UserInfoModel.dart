@@ -41,7 +41,6 @@ class UserInfoControlModel {
   // 插入新的缓存，将用户信息插入到userInfo这个列里面
   Future insert(UserInfo userInfo) {
     var result =
-//        sql.insert(userInfo.toMap());
     sql.insert({'username': userInfo.username, 'password': userInfo.password});
     return result;
   }

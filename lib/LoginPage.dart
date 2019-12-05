@@ -12,9 +12,35 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _signInFormKey = new GlobalKey();
   bool isShowPassWord = false;
   bool isLoading = false;
-  String userName;
-  String password;
+  String userName='';
+  String password='';
 
+  UserInfoControlModel _userInfoControlModel = new UserInfoControlModel();
+  TextEditingController _userNameEditingController =
+  new TextEditingController();
+  TextEditingController _passwordEditingController =
+  new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    try {
+      _userInfoControlModel.getAllInfo().then((list) {
+        if (list.length > 0) {
+          UserInfo _userInfo = list[0];
+          setState(() {
+            _userNameEditingController.text = _userInfo.username;
+            _passwordEditingController.text = _userInfo.password;
+            userName = _userInfo.username;
+            password = _userInfo.password;
+          });
+        }
+      });
+    } catch (err) {
+      print('读取用户本地存储的用户信息出错 $err');
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,12 +124,15 @@ class _LoginPageState extends State<LoginPage> {
       child: Padding(
         padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
         child: TextFormField(
+          keyboardType:TextInputType.text,
+          controller: _passwordEditingController,
           decoration: InputDecoration(
             icon: Icon(
               Icons.lock,
               color: Colors.black,
             ),
             hintText: "密码",
+
             border: InputBorder.none,
             suffixIcon: IconButton(
               icon: Icon(
@@ -138,6 +167,8 @@ class _LoginPageState extends State<LoginPage> {
         padding:
             const EdgeInsets.only(left: 25, right: 25, top: 20, bottom: 20),
         child: TextFormField(
+          keyboardType:TextInputType.text,
+          controller: _userNameEditingController,
           //关联焦点
           decoration: InputDecoration(
               icon: Icon(
@@ -186,7 +217,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  UserInfoControlModel _userInfoControlModel = new UserInfoControlModel();
 
   /// 登陆操作
   doLogin() {
@@ -201,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
       _userInfoControlModel.deleteAll().then((result) {
         print('删除结果：$result');
         _userInfoControlModel
-            .insert(UserInfo(password: password, username: userName))
+            .insert(UserInfo(password: password.toString(), username: userName.toString()))
             .then((value) {
           print('存储成功:$value');
           setState(() {
