@@ -40,12 +40,6 @@ class FlutterHome extends StatelessWidget {
           }),
     );
   }
-
-  Widget _createWidget() {
-    return Stack(
-      children: <Widget>[RawImage(), Center(), RawImage()],
-    );
-  }
 }
 
 class _RouterInfo {

@@ -195,29 +195,32 @@ class _LoginPageState extends State<LoginPage> {
 
   //创建登录按钮
   Widget _buildSignInButton() {
-    return GestureDetector(
-      child: Container(
-        padding: EdgeInsets.only(left: 42, right: 42, top: 10, bottom: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-            color: Theme.of(context).primaryColor),
-        child: Text(
-          "登录",
-          style: TextStyle(fontSize: 25, color: Colors.white),
+    return Builder(builder: (context) {
+      return GestureDetector(
+        child: Container(
+          padding: EdgeInsets.only(left: 42, right: 42, top: 10, bottom: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              color: Theme.of(context).primaryColor),
+          child: Text(
+            "登录",
+            style: TextStyle(fontSize: 25, color: Colors.white),
+          ),
         ),
-      ),
-      onTap: () {
-        // 利用key来获取widget的状态FormState,可以用过FormState对Form的子孙FromField进行统一的操作
-        if (_signInFormKey.currentState.validate()) {
-          doLogin();
-        }
-      },
-    );
+        onTap: () {
+          // 利用key来获取widget的状态FormState,可以用过FormState对Form的子孙FromField进行统一的操作
+          if (_signInFormKey.currentState.validate()) {
+            doLogin(context);
+          }
+        },
+      );
+    });
+
   }
 
 
   /// 登陆操作
-  doLogin() {
+  doLogin(BuildContext context) {
     setState(() {
       isLoading = true;
     });
@@ -235,10 +238,14 @@ class _LoginPageState extends State<LoginPage> {
           setState(() {
             isLoading = false;
           });
-          //跳转到首页
-//        Navigator.of(context).pushAndRemoveUntil(
-//            MaterialPageRoute(builder: (context) => AppPage(userResult)),
-//            (route) => route == null);
+//
+//          Fluttertoast.showToast(
+//              msg: "登录成功",
+//              toastLength: Toast.LENGTH_SHORT,
+//              gravity: ToastGravity.CENTER,
+//          );
+          //登录成功返回
+          Navigator.pop(context);
         });
       });
     } catch (err) {
