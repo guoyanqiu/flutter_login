@@ -19,12 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   sqflite: ^1.1.5
-  # 本地存储、收藏功能
-  shared_preferences: ^0.4.3
   flutter_spinkit: "^3.1.0"
 dev_dependencies:
   flutter_test:

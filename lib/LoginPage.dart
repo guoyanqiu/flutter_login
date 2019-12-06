@@ -29,7 +29,9 @@ class _LoginPageState extends State<LoginPage> {
         if (list.length > 0) {
           UserInfo _userInfo = list[0];
           setState(() {
+            //输入框自动展示用户名
             _userNameEditingController.text = _userInfo.username;
+            //输入框自动展示用密码
             _passwordEditingController.text = _userInfo.password;
             userName = _userInfo.username;
             password = _userInfo.password;

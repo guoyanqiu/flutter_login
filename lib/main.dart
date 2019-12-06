@@ -10,10 +10,10 @@ import 'utils/SqlLiteUtil.dart';
 void main() async {
   ///需要对数据库
   final provider = new Provider();
-  await provider.init(true);
-  runApp(new FlutterDemo());
+  await provider.init();
+  runApp(new LoginDemo());
 }
-class FlutterDemo extends StatelessWidget {
+class LoginDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(title: "Login_Demo", home: FlutterHome());

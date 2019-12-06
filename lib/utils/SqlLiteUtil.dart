@@ -9,16 +9,14 @@ import 'package:flutter/services.dart' show rootBundle;
 
 ///
 ///
-/// CREATE TABLE userInfo (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, username REAL (50) NOT NULL, password REAL (32) NOT NULL);
 class Provider {
   static Database db;
   //初始化数据库
   //在app启动的时候调用
-  Future init(bool isCreate) async {
+  Future init() async {
     //获取本地SqlLite数据库
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'flutter.db');
-    print(path);
     try {
       //打开数据库
       db = await openDatabase(path);
@@ -28,20 +26,17 @@ class Provider {
 
     bool tableIsExits = await this.checkTableExits();
     if(tableIsExits){
-      print("Opening existing database");
       return;
     }
-
     /// 关闭上面打开的db，否则无法执行open
     db.close();
     // Delete the database
-    await deleteDatabase(path)
-    ;
+    await deleteDatabase(path);
     ByteData data = await rootBundle.load(join("assets", "loginDB.db"));
     List<int> bytes =
     data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
     await new File(path).writeAsBytes(bytes);
-
+    ///创建数据库
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
           print('db created version is $version');
