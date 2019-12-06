@@ -211,9 +211,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         onTap: () {
           // 利用key来获取widget的状态FormState,可以用过FormState对Form的子孙FromField进行统一的操作
-          if (_signInFormKey.currentState.validate()) {
-            doLogin(context);
-          }
+          doLogin(context);
         },
       );
     });
@@ -223,38 +221,33 @@ class _LoginPageState extends State<LoginPage> {
 
   /// 登陆操作
   doLogin(BuildContext context) {
+    ///对用户名和密码输入框进行非空校验
+    if (!_signInFormKey.currentState.validate()) {
+       return;
+    }
     setState(() {
+      ///显示登陆中的沙漏倒计时
       isLoading = true;
     });
-
     ///给userName和password赋值
     _signInFormKey.currentState.save();
-    print('开始登陆');
     try {
       _userInfoControlModel.deleteAll().then((result) {
-        print('删除结果：$result');
         _userInfoControlModel
+            ///把用户名和密码插入到userInfo数据库
             .insert(UserInfo(password: password, username: userName))
             .then((value) {
           print('存储成功:$value');
           setState(() {
             isLoading = false;
           });
-//
-//          Fluttertoast.showToast(
-//              msg: "登录成功",
-//              toastLength: Toast.LENGTH_SHORT,
-//              gravity: ToastGravity.CENTER,
-//          );
-          //登录成功返回
+          //插入数据成功返回主页面
           Navigator.pop(context);
         });
       });
     } catch (err) {
       print("错误信息=="+err);
     }
-
-
   }
 
 // 点击控制密码是否显示
